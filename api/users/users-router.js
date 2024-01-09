@@ -5,6 +5,20 @@ const router = require("express").Router()
 
 const Users = require("./users-model")
 
+
+router.get("/", async (req, res, next) => {
+  console.log("running...")
+  await Users.find()
+  .then(users => {
+    res.status(200).json(users)
+  })
+  .catch(error => {
+    next(error)
+  })
+})
+
+
+
 /**
   [GET] /api/users
 
