@@ -9,7 +9,24 @@ const bcrypt = require("bcryptjs")
 
 
 router.post("/register", (req, res, next) => {
-  console.log("Reaching the endpoint called Register")
+  const { username, password } = req.body
+  console.log("this is the username:", username, "this is the password:", password)
+
+  Users.add({"username": username, "password": password})
+  .then(id => {
+    console.log("this is the id:", id)
+    Users.findById(id)
+    .then(newUser => {
+      res.json(newUser)
+    })
+    .catch(error => {
+      next(error)
+    })
+  })
+  .catch(error => {
+    next(error)
+  })
+  
 })
 
 /**

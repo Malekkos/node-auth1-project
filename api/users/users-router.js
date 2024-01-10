@@ -9,8 +9,14 @@ const Users = require("./users-model")
 router.get("/", async (req, res, next) => {
   console.log("running...")
   await Users.find()
-  .then(users => {
-    res.status(200).json(users)
+  .then(id => {
+    Users.findById(id)
+    .then(newUser => {
+      res.json(newUser)
+    })
+    .catch(error => {
+      next(error)
+    })
   })
   .catch(error => {
     next(error)
