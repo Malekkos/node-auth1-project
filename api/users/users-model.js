@@ -16,7 +16,10 @@ function find() {
   resolves to an ARRAY with all users that match the filter condition
  */
 function findBy(filter) {
+  const data = db("users")
+  .where("username", filter) //just filtering by name, right? TBD
 
+  return data
 }
 
 /**
