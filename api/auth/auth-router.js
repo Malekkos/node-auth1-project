@@ -16,7 +16,8 @@ router.post("/register", checkUsernameFree, checkPasswordLength, (req, res, next
   .then(id => {
     Users.findById(id)
     .then(newUser => {
-      res.json(newUser)
+      console.log(newUser)
+      res.status(200).json({"user_id": newUser.user_id, "username": newUser.username})
     })
     .catch(error => {
       next(error)
