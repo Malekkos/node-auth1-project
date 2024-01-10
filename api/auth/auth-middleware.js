@@ -54,7 +54,6 @@ next()
 */
 function checkPasswordLength(req, res, next) {
   const { password } = req.body
-  console.log(password)
   if(password === undefined || password.length <= 3) {
     next({status: 422, message: "Password must be longer than 3 chars"})
   } else {
