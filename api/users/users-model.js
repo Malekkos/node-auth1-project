@@ -1,6 +1,4 @@
-
 const db = require("../../data/db-config")
-
 
 
 /**
@@ -37,12 +35,9 @@ async function findById(user_id) {
   resolves to the newly inserted user { user_id, username }
  */
 async function add(user) {
-  console.log("we are in here", user)
-  const data = await db("users")
+  await db("users")
   .insert(user)
-  console.log("this is the data object in add:", data)
   const newUser = await findById(user)
-  console.log(newUser)
   return newUser
 }
 
