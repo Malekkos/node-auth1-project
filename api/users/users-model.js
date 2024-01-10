@@ -15,7 +15,8 @@ function find() {
  */
 function findBy(filter) {
   const data = db("users")
-  .where("username", filter) //just filtering by name, right? TBD
+  .where(filter)
+  .first()
 
   return data
 }

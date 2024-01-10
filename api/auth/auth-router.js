@@ -8,9 +8,11 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 
 
-router.post("/register", (req, res, next) => {
+router.post("/register", checkUsernameFree, checkPasswordLength, (req, res, next) => {
   const { username, password } = req.body
-  Users.add({"username": username, "password": password})
+  const hash = bcrypt.hashSync(password, 10)
+
+  Users.add({"username": username, "password": hash})
   .then(id => {
     Users.findById(id)
     .then(newUser => {
