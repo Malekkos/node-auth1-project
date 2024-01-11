@@ -6,7 +6,7 @@ const router = require("express").Router()
 const Users = require("./users-model")
 
 
-router.get("/", async (req, res, next) => {
+router.get("/", restricted, async (req, res, next) => {
   await Users.find()
   .then(users => {
     res.status(200).json(users)

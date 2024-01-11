@@ -1,5 +1,5 @@
 const Users = require("../users/users-model")
-const db = require("../../data/db-config")
+
 /*
   If the user does not have a session saved in the server
 
@@ -8,8 +8,13 @@ const db = require("../../data/db-config")
     "message": "You shall not pass!"
   }
 */
+
 function restricted(req, res, next) {
-next()
+  if(req.session.user) {
+    next()
+  } else {
+    next({ status: 401, message: "You shall not pass!"})
+  }
 }
 
 /*
@@ -40,8 +45,19 @@ async function checkUsernameFree(req, res, next) {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists(req, res, next) {
-next()
+async function checkUsernameExists(req, res, next) {
+  const { username } = req.body
+
+  const user = await Users.findBy({"username": username})
+  console.log("this is the user inside of checkUsernameExists:", user)
+  if (user === undefined) {
+    next({ status: 401, message: "Invalid credentials"})
+  } else {
+    req.user = user
+    next()
+  }
+  next()
+
 }
 
 /*
